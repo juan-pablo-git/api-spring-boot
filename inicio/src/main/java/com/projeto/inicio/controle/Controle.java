@@ -7,7 +7,10 @@ import com.projeto.inicio.repositorio.Repositorio;
 
 import java.util.List;
 
+import org.apache.tomcat.util.net.jsse.PEMFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class Controle {
@@ -45,6 +49,36 @@ public class Controle {
     public Pessoa cadastrar(@RequestBody Pessoa obj) {
         return acao.save(obj);
     }
+
+    @GetMapping("/api/idademaiorigual")
+    public List<Pessoa> idadeMaiorIgual() {
+        return acao.idadeMaiorIgual(18);
+    }
+    
+
+    @GetMapping("/api/somaidades")
+    public int somaIdades() {
+        return acao.somaIdades();
+    }
+    
+
+    @GetMapping("/api/iniciacom")
+    public List<Pessoa> iniciaCom() {
+        return acao.findByNomeStartsWith("o");
+    }
+
+    @GetMapping("/api/finalizacom")
+    public List<Pessoa> finalizacom() {
+        return acao.findByNomeEndsWith("a");
+    }
+    
+    
+
+    @GetMapping("/api/ordenarnome2")
+    public List<Pessoa> ordenarnome2() {
+        return acao.findByNomeOrderByIdadeDesc("pablo");
+    }
+    
 
     @GetMapping("/api/ordenarnomes")
     public List<Pessoa> getMethodName() {
@@ -77,5 +111,11 @@ public class Controle {
     public String boasVindas(@PathVariable String nome) {
         return "Boas Vindas " + nome;
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<?> status() {
+        return new ResponseEntity<>(HttpStatus.CREATED) ;
+    }
+    
 
 }
