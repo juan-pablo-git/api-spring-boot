@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projeto.inicio.modelo.Pessoa;
 import com.projeto.inicio.repositorio.Repositorio;
+import com.projeto.inicio.servico.Servico;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class Controle {
     @Autowired
     private Repositorio acao;
 
+    @Autowired
+    private Servico servico;
+
 
     @PutMapping("/api")
     public Pessoa editar(@RequestBody Pessoa obj) {
@@ -46,8 +50,8 @@ public class Controle {
 
 
     @PostMapping("/api")
-    public Pessoa cadastrar(@RequestBody Pessoa obj) {
-        return acao.save(obj);
+    public ResponseEntity<?> cadastrar(@RequestBody Pessoa obj) {
+        return servico.cadastrar(obj);
     }
 
     @GetMapping("/api/idademaiorigual")
