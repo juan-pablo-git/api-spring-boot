@@ -17,6 +17,7 @@ public class Servico {
     @Autowired
     private Repositorio acao;
 
+    // Cadastrar Pessoas
     public ResponseEntity<?> cadastrar(Pessoa obj){
         if(obj.getNome().equals("")){
             mensagem.setMensagem("O nome precisa ser preenchhido");
@@ -28,6 +29,25 @@ public class Servico {
             mensagem.setMensagem("Registro criado com sucesso");
             acao.save(obj);
             return new ResponseEntity<>(mensagem,HttpStatus.CREATED);
+        }
+    }
+
+    //Selecionar pessoas
+    public ResponseEntity<?> selecionar(){
+        return new ResponseEntity<>(acao.findAll(),HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> selecionarPeloCodigo(int codigo){
+        Pessoa p = acao.findByCodigo(codigo);
+        if(p == null){
+            p = new Pessoa();
+            p.setCodigo(0);
+            p.setNome("Pesoa não encontrada");
+            mensagem.setMensagem("Pessoa não encontrada");
+            return new ResponseEntity<>(mensagem,HttpStatus.BAD_REQUEST); 
+        }else{
+
+            return new ResponseEntity<>(p,HttpStatus.ACCEPTED); 
         }
     }
 

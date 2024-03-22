@@ -2,6 +2,7 @@ package com.projeto.inicio.controle;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projeto.inicio.modelo.Mensagem;
 import com.projeto.inicio.modelo.Pessoa;
 import com.projeto.inicio.repositorio.Repositorio;
 import com.projeto.inicio.servico.Servico;
@@ -29,7 +30,6 @@ public class Controle {
 
     @Autowired
     private Servico servico;
-
 
     @PutMapping("/api")
     public Pessoa editar(@RequestBody Pessoa obj) {
@@ -91,8 +91,8 @@ public class Controle {
     
 
     @GetMapping("/selecionar")
-    public List<Pessoa> selecionar() {
-        return acao.findAll();
+    public ResponseEntity<?> selecionar() {
+        return servico.selecionar();
     }
 
     @GetMapping("/api/contador")
@@ -101,8 +101,8 @@ public class Controle {
     }
 
     @GetMapping("/api/{codigo}")
-    public Pessoa selecionarPeloCodigo(@PathVariable int codigo) {
-        return acao.findByCodigo(codigo);
+    public ResponseEntity<?> selecionarPeloCodigo(@PathVariable int codigo) {
+        return servico.selecionarPeloCodigo(codigo);
     }
 
     @GetMapping("")
