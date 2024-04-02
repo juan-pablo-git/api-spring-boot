@@ -51,4 +51,32 @@ public class Servico {
         }
     }
 
+    // Metodo para editar dados
+    public ResponseEntity<?> editar(Pessoa obj){
+        if(acao.countByCodigo(obj.getCodigo()) == 0){
+            mensagem.setMensagem("o codugo informado não existe");
+            return new ResponseEntity<>(mensagem,HttpStatus.NOT_FOUND);
+        }else if(obj.getNome().equals("")){
+            mensagem.setMensagem("É nessesario informar o nome");
+            return new ResponseEntity<>(mensagem,HttpStatus.BAD_REQUEST);
+        }else if(obj.getIdade() < 0){
+            mensagem.setMensagem("Informe a mensagem valida");
+            return new ResponseEntity<>(mensagem,HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>(acao.save(obj),HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<?> remover(int codigo ){
+        if(acao.countByCodigo(codigo) == 0){
+            mensagem.setMensagem("Registro não existe");
+            return new ResponseEntity<>(mensagem,HttpStatus.BAD_REQUEST);
+        }else{
+            Pessoa obj = acao.findByCodigo(codigo);
+            acao.delete(obj);
+            mensagem.setMensagem("Registro deletado com sucesso");
+            return new ResponseEntity<>(mensagem,HttpStatus.OK);
+        }
+    }
+
 }

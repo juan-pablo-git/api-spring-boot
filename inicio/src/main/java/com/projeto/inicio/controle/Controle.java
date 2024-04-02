@@ -32,15 +32,14 @@ public class Controle {
     private Servico servico;
 
     @PutMapping("/api")
-    public Pessoa editar(@RequestBody Pessoa obj) {
+    public ResponseEntity<?> editar(@RequestBody Pessoa obj) {
 
-        return acao.save(obj);
+        return servico.editar(obj);
     }
 
     @DeleteMapping("/api/{codigo}")
-    public void remover(@PathVariable int codigo) {
-        Pessoa obj = selecionarPeloCodigo(codigo);
-        acao.delete(obj);
+    public ResponseEntity<?> remover(@PathVariable int codigo) {
+        return servico.remover(codigo);
     }
 
     @PostMapping("/pessoa")
