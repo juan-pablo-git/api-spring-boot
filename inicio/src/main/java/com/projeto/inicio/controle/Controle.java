@@ -2,14 +2,15 @@ package com.projeto.inicio.controle;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projeto.inicio.modelo.Mensagem;
+import com.projeto.inicio.modelo.Cliente;
 import com.projeto.inicio.modelo.Pessoa;
 import com.projeto.inicio.repositorio.Repositorio;
 import com.projeto.inicio.servico.Servico;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
-import org.apache.tomcat.util.net.jsse.PEMFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -51,6 +51,11 @@ public class Controle {
     @PostMapping("/api")
     public ResponseEntity<?> cadastrar(@RequestBody Pessoa obj) {
         return servico.cadastrar(obj);
+    }
+
+    @PostMapping("/cliente")
+    public ResponseEntity<?> cliente( @Valid @RequestBody Cliente obj){
+        return new ResponseEntity<>("teste",HttpStatus.OK);
     }
 
     @GetMapping("/api/idademaiorigual")
